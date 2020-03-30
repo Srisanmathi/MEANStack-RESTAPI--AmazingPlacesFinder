@@ -6,6 +6,8 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 
+app.set("view engine","ejs");
+
 //Body Parser
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -36,7 +38,9 @@ app.use('/api-docs',swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //Routes
 const places = require('./routes/places');
-app.use('/',places);
+const about = require('./routes/about');
+app.use('/api',places);
+app.use('/',about);
 
 //Server 
 const   PORT = 3000;

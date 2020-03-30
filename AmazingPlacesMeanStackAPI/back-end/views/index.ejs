@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazing Places API</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <main>
+        <h1>Amazing Places API</h1>
+        <section>
+            <h3>POST</h3>
+            Name     : <input id = "name"/>
+            State    : <input id = "state"/>
+            Country  : <input id = "country"/>
+            Rating   : <input id = "rating"/> 
+            <br>
+            <br>
+            <button onclick="onPost()">Post</button>
+            <p id = "postsuccess"></p>
+        </section>
+        <hr>
+        <section>
+            <h3>GET PLACE BY ID</h3>
+            Id  : <input id = "get_id"/>
+            
+            <button onclick="onGetById()">Get</button>
+            <br>
+            <p id = "get_id_name"></p>
+            <p id = "get_id_state"></p>
+            <p id = "get_id_country"></p>
+            <p id = "get_id_rating"></p>
+        </section>
+        <hr>
+        <section>
+            <h3>DELETE PLACE BY ID</h3>
+            Id  : <input id = "delete_id"/>
+            
+            <button onclick="onDeleteById()">Delete</button>
+            <p id = "deletesuccess"></p>
+        </section>
+        <hr>
+        <section>
+            <h3>PATCH</h3>
+            Id       : <input id = "patch_id"/>
+            Name     : <input id = "patch_name"/>
+            State    : <input id = "patch_state"/>
+            Country  : <input id = "patch_country"/>
+            Rating   : <input id = "patch_rating"/> 
+            <br>
+            <br>
+            <button onclick="onPatch()">Patch</button>
+            <p id = "patchsuccess"></p>
+            
+            
+        </section>
+        <hr>
+        <section>
+            <h3>PUT</h3>
+            Id       : <input id = "put_id"/>
+            Name     : <input id = "put_name"/>
+            State    : <input id = "put_state"/>
+            Country  : <input id = "put_country"/>
+            Rating   : <input id = "put_rating"/> 
+            <br>
+            <br>
+            <button onclick="onPut()">Put</button>
+            <p id = "putsuccess"></p>
+        </section>
+       
+       
+    </main>
+    <script>
+        function onPost() {
+            let name = document.getElementById('name').value;
+            let state = document.getElementById('state').value;
+            let country = document.getElementById('country').value;
+            let rating = document.getElementById('rating').value;
+            axios.post('http://localhost:3000/place',{name : name, state : state, country : country, rating : rating})
+            .then(()=>{
+                document.getElementById('postsuccess').innerHTML = "Post is successful!"
+          })
+          .catch(()=>{
+            document.getElementById('postsuccess').innerHTML = "Error posting data"
+          })
+        }
+
+        function onGetById() {
+            let id =document.getElementById('get_id').value;
+            axios.get('http://localhost:3000/place?id='+id)
+            .then((res)=>{
+                document.getElementById('get_id_name').innerHTML =  "Name       : "+ res.data.name;
+                document.getElementById('get_id_state').innerHTML = "State    : " + res.data.state;
+                document.getElementById('get_id_country').innerHTML = "Country  : " + res.data.country;
+                document.getElementById('get_id_rating').innerHTML = "Rating   : " + res.data.rating;
+            })
+            .catch(()=>{
+                document.getElementById('').innerHTML = "Error Getting data"
+            })
+        }
+
+        
+        function onDeleteById(){
+            let id =document.getElementById('delete_id').value;
+            axios.delete('http://localhost:3000/place?id='+id)
+            .then((r)=>{
+                document.getElementById('deletesuccess').innerHTML = "Delete is successful!";
+            })
+            .catch((err)=>{
+                document.getElementById('deletesuccess').innerHTML = "Not successful ";
+            })
+        }
+
+        function onPatch() {
+            let id = document.getElementById('patch_id').value;
+            let name = document.getElementById('patch_name').value;
+            let state = document.getElementById('patch_state').value;
+            let country = document.getElementById('patch_country').value;
+            let rating = document.getElementById('patch_rating').value;
+            axios.patch('http://localhost:3000/place?id='+id,{name : name, state : state, country : country, rating : rating}
+            )
+            .then(()=>{
+                document.getElementById('patchsuccess').innerHTML = "Patch is successful!"
+          })
+          .catch(()=>{
+            document.getElementById('patchsuccess').innerHTML = "Error putting data"
+          })
+        }
+
+        function onPut() {
+            let id = document.getElementById('put_id').value;
+            let name = document.getElementById('put_name').value;
+            let state = document.getElementById('put_state').value;
+            let country = document.getElementById('put_country').value;
+            let rating = document.getElementById('put_rating').value;
+            axios.put('http://localhost:3000/place?id='+id,{name : name, state : state, country : country, rating : rating})
+            .then(()=>{
+                document.getElementById('putsuccess').innerHTML = "Put is successful!"
+          })
+          .catch(()=>{
+            document.getElementById('putsuccess').innerHTML = "Error putting data"
+          })
+        }
+        </script>
+</body>
+</html>
