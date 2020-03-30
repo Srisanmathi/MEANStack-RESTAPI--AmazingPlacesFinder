@@ -1,0 +1,15 @@
+<mat-card>
+    <h2>DELETE</h2>
+    <mat-form-field>
+        <mat-label>ID </mat-label>
+        <textarea matInput [(ngModel)]= "id" ></textarea>
+    </mat-form-field>  
+    <br>
+    <button mat-raised-button color = "accent" (click)="onDelete()">Delete</button>
+    <p *ngIf="isDeleted" >Successfully deleted in the database 
+        <button mat-raised-button color = "primary" (click)="onClear()">Clear</button>
+    </p>
+    
+    
+</mat-card>
+

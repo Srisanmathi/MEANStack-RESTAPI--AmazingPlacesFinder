@@ -1,0 +1,13 @@
+<mat-card>
+    <h2>GET ALL PLACES</h2>
+    <p *ngIf="places.length<1">No places to display</p>
+    <div *ngFor="let place of places">
+       <h3> Name: {{place.name}}</h3>
+       <p>ID : {{place._id}}</p>
+       <p> State : {{place.state}}</p>
+       <p>Country: {{place.country}} </p>
+       <p> Rating: {{place.rating}}</p>
+        
+    </div> 
+</mat-card>
+

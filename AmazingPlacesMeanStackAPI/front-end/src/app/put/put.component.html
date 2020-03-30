@@ -1,0 +1,34 @@
+<mat-card>
+    <h2>PUT</h2>
+    <mat-form-field>
+        <mat-label>ID  </mat-label>
+        <input matInput [(ngModel)]= "id" />
+    </mat-form-field>  
+    <br>
+    <mat-form-field>
+        <mat-label>Name  </mat-label>
+        <input matInput [(ngModel)]= "name" />
+    </mat-form-field>  
+    <br>
+    <mat-form-field>
+        <mat-label>State  </mat-label>
+        <input matInput [(ngModel)]= "state" />
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Country </mat-label>
+        <input matInput [(ngModel)]= "country" />
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Rating  </mat-label>
+        <input matInput [(ngModel)]= "rating" />
+    </mat-form-field>
+    <br> 
+    <button mat-raised-button color = "accent" (click)="onPut()">Put</button>
+    <p *ngIf="check()" >Successfully updated in the database 
+        <button mat-raised-button color = "primary" (click)="onClear()">Clear</button>
+    </p>
+    
+</mat-card>
+

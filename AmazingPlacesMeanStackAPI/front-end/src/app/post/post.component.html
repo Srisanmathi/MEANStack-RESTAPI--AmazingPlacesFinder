@@ -1,0 +1,28 @@
+<mat-card>
+    <h2>POST</h2>
+    <mat-form-field>
+        <mat-label>Name  </mat-label>
+        <input matInput [(ngModel)]= "name" />
+    </mat-form-field>  
+    <br>
+    <mat-form-field>
+        <mat-label>State  </mat-label>
+        <input matInput [(ngModel)]= "state" />
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Country </mat-label>
+        <input matInput [(ngModel)]= "country" />
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Rating  </mat-label>
+        <input matInput [(ngModel)]= "rating" />
+    </mat-form-field>
+    <br> 
+    <button mat-raised-button color = "accent" (click)="onPost()">Post</button>
+    <p *ngIf="check()" >{{storedPlace.name}} is successfully saved in the database 
+        <button mat-raised-button color = "primary" (click)="onClear()">Clear</button>
+    </p>
+    
+</mat-card>
