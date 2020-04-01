@@ -90,6 +90,7 @@ router.get('/places',(req,res)=>{
     });
 })
 
+
 //Get Single Place
 router.get('/places/:id',(req,res)=>{
     console.log("get single place called")
