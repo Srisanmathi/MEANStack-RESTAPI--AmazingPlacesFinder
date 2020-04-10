@@ -1,4 +1,6 @@
 mat-toolbar {
     text-align: left;
-    color: darkorchid;
+    background-color: darkorchid;
+    color: white;
+    
 }
