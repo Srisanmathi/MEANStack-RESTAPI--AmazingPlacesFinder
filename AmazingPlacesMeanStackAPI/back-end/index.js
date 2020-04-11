@@ -4,7 +4,7 @@ const app = express();
 
 //CORS
 const cors = require('cors');
-app.use(cors());
+app.use(cors({origin: 'http://161.35.15.186:4200'}));
 
 app.set("view engine","ejs");
 
@@ -39,8 +39,8 @@ app.use('/api-docs',swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 //Routes
 const places = require('./routes/places');
 const about = require('./routes/about');
-app.use('/api',places);
-app.use('/',about);
+app.use('/',places);
+//app.use('/',about);
 
 //Server 
 const   PORT = 3000;
