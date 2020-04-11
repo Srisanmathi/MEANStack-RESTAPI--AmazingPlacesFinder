@@ -2,9 +2,10 @@
 const express = require('express');
 const router = express.Router();
 
+
 //mongoDB
 const mongojs = require('mongojs');
-const Place = require('./mongooseDB');
+const Place = require('../utilities/mongooseDB');
 const db = mongojs("mongodb+srv://admin:admin@amazingplacesdatabase-cyh2v.azure.mongodb.net/test?retryWrites=true&w=majority",['places']);
 
 /**
@@ -32,30 +33,12 @@ const db = mongojs("mongodb+srv://admin:admin@amazingplacesdatabase-cyh2v.azure.
   *         type: number
   *       _id:
   *         type: string
+  *   Rating:
+  *      properties:
+  *        rating:
+  *         type: string
   */
 
-   /**
-   * @swagger
-   * definitions:
-   *   affectedResponse:
-   *     properties:
-   *       fieldCount:
-   *         type: integer
-   *       affectedRows:
-   *         type: integer
-   *       insertId:
-   *         type: integer
-   *       serverStatus:
-   *         type: integer
-   *       warningCount:
-   *         type: integer
-   *       message:
-   *         type: string
-   *       protocol41:
-   *         type: boolean
-   *       changedRows:
-   *         type: integer
-   */
 
    /**
  * @swagger
@@ -81,25 +64,53 @@ const db = mongojs("mongodb+srv://admin:admin@amazingplacesdatabase-cyh2v.azure.
 
 //Get all places
 router.get('/places',(req,res)=>{
-    console.log("get all places called")
-    db.places.find((err, places)=>{
-        if(err){
-            res.send(err)
+    Place.find((err, doc)=>{
+        if(!err){
+            res.send(doc);
         }
-        res.json(places);
-    });
+        else{
+            console.log("Error retrieving all places");
+        }
+    })
 })
 
+/**
+  * @swagger
+  * /places/{id}:
+  *   get:
+  *     tags:
+  *       - Places
+  *     summary: Get a Place
+  *     description: Get place by ID
+  *     produces:
+  *       - application/json
+  *     parameters:
+  *       - name: id
+  *         description: Place's Id
+  *         in: path
+  *         required: true
+  *         type: string
+  *     responses:
+  *       200:
+  *         description: A Single Place
+  *       404:
+  *         description: No Place with that Id
+  *       500:
+  *         description: Problem communicating with db
+  *         schema:
+  *           $ref: '#/definitions/StoredPlace'
+  */
 
 //Get Single Place
 router.get('/places/:id',(req,res)=>{
-    console.log("get single place called")
-    db.places.findOne({_id : mongojs.ObjectId(req.params.id)},(err, place)=>{
-        if(err){
-            res.send(err)
+    Place.findById(req.params.id,(err,doc)=>{
+        if(!err){
+            res.send(doc);
         }
-        res.json(place);
-    });
+        else{
+            console.log("Error retrieving the place");
+        }
+    })
 })
 
 /**
@@ -114,7 +125,7 @@ router.get('/places/:id',(req,res)=>{
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: body
+ *       - name: place
  *         description: new place
  *         in: body
  *         title: title
@@ -132,13 +143,21 @@ router.get('/places/:id',(req,res)=>{
 //Save Place
 router.post('/places',(req,res)=>{
     console.log("post is called =>",req.body)
-    let place = req.body;
-        db.places.save(place,(err,place)=>{
-            if(err){
-                res.send(err)
-            }
-            res.json(place);
-        });
+    // let place = req.body;
+    const place = new Place({
+        name :req.body.name,
+        state : req.body.state,
+        country :req.body.country,
+        rating :req.body.rating
+    })
+    place.save((err,doc)=>{
+        if(!err){
+            res.send(doc);
+        }
+        else{
+            console.log("Error saving to database");
+        }
+    })
 })
 
 /**
@@ -170,12 +189,15 @@ router.post('/places',(req,res)=>{
 //Delete Place
 router.delete('/places/:id',(req,res)=>{
     console.log("Delete called=>",req.params.id);
-    db.places.remove({_id : mongojs.ObjectId(req.params.id)},(err, place)=>{
-        if(err){
-            res.send(err)
+    Place.findByIdAndDelete(req.params.id,(err,doc)=>{
+        if(!err){
+            res.send(doc);
         }
-        res.json(place);
-    });
+        else{
+            console.log("Error deleting the place");
+        }
+    })
+    
 })
 
 /**
@@ -196,7 +218,7 @@ router.delete('/places/:id',(req,res)=>{
   *         in: path
   *         required: true
   *         type: string
-  *       - name: body
+  *       - name: Place
   *         in: body
   *         description: Fields for the place resource
   *         schema:
@@ -227,5 +249,53 @@ router.put('/places/:id',(req,res)=>{
     })
 })
 
+/**
+  * @swagger
+  * /places/{id}:
+  *   patch:
+  *     tags:
+  *       - Places
+  *     name: Update a place Profile
+  *     summary: Edit a place
+  *     consumes:
+  *       - application/json
+  *     produces:
+  *       - application/json
+  *     parameters:
+  *       - name: id
+  *         description: Place Id
+  *         in: path
+  *         required: true
+  *         type: string
+  *       - name: Place
+  *         in: body
+  *         description: Fields for the place resource
+  *         schema:
+  *           $ref: '#/definitions/Rating'
+  *     responses:
+  *       200:
+  *         description: Place Updated Successfully
+  *       404:
+  *         description: No Place in db with that Id
+  *       500:
+  *         description: Problem communicating with db
+  */
 
+router.patch('/places/:id',(req,res)=>{
+    let p;
+    console.log("id",req.params.id);
+    console.log("id",req.body);
+    Place.findById(req.params.id,(err,doc)=>{
+        if(!err){
+            console.log(doc);
+            doc.rating = req.body.rating;
+            doc.save((err,d)=>{
+                if(!err){
+                    res.send(doc);    
+                }
+            })
+        }
+    })
+
+})
 module.exports = router;

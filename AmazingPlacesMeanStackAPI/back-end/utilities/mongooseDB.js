@@ -4,6 +4,7 @@ mongoose.connect('mongodb+srv://admin:admin@amazingplacesdatabase-cyh2v.azure.mo
     useUnifiedTopology: true             //To remove some console deprecation warning
   },
   );
+  
 db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', function() {

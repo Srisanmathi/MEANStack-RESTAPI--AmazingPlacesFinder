@@ -17,6 +17,8 @@ import {
 import { DeleteComponent } from './delete/delete.component';
 import { PutComponent } from './put/put.component';
 import { GetComponent } from './get/get.component';
+import { GetoneComponent } from './getone/getone.component';
+import { PatchComponent } from './patch/patch.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { GetComponent } from './get/get.component';
     PostComponent,
     DeleteComponent,
     PutComponent,
-    GetComponent
+    GetComponent,
+    GetoneComponent,
+    PatchComponent
   ],
   imports: [
     BrowserModule,

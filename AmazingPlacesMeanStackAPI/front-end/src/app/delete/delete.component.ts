@@ -9,6 +9,7 @@ import { Place } from '../place';
 export class DeleteComponent implements OnInit {
   id: string;
   isDeleted : boolean = false;
+  
   constructor(public placesService : PlacesService) { }
 
   ngOnInit() {
@@ -19,6 +20,7 @@ export class DeleteComponent implements OnInit {
       console.log(res);
       if(res){
         this.isDeleted = true;
+        
       }
     })
   }

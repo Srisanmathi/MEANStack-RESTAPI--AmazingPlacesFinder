@@ -1,0 +1,23 @@
+<mat-card>
+    <h2>GET PLACE BY ID</h2>
+    <mat-form-field>
+        <mat-label>ID </mat-label>
+        <textarea matInput [(ngModel)]= "id" ></textarea>
+    </mat-form-field>  
+    <br>
+    <button mat-raised-button color = "accent" (click)="onGetOne()">Get</button>
+    <div *ngIf="isFound">
+        <h3> Name: {{places.name}}</h3>
+        <p>ID : {{places._id}}</p>
+        <p> State : {{places.state}}</p>
+        <p>Country: {{places.country}} </p>
+        <p> Rating: {{places.rating}}</p>
+         
+     </div> 
+    <p *ngIf="isFound" >
+        <button mat-raised-button color = "primary" (click)="onClear()">Clear</button>
+    </p>
+    
+    
+</mat-card>
+

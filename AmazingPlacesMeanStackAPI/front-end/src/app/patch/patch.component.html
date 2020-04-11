@@ -1,0 +1,20 @@
+
+<mat-card>
+    <h2>PATCH (Update Rating)</h2>
+    <mat-form-field>
+        <mat-label>ID  </mat-label>
+        <input matInput [(ngModel)]= "id" />
+    </mat-form-field>  
+    <br>
+    <mat-form-field>
+        <mat-label>Rating  </mat-label>
+        <input matInput [(ngModel)]= "rating" />
+    </mat-form-field>
+    <br> 
+    <button mat-raised-button color = "accent" (click)="onPatch()">Patch</button>
+    <p *ngIf="check()" >Successfully updated in the database 
+        <button mat-raised-button color = "primary" (click)="onClear()">Clear</button>
+    </p>
+    
+</mat-card>
+
