@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class PlacesService {
 
-  readonly ROOT_URL = 'http://159.89.233.210:3000';
+  readonly ROOT_URL = 'http://159.89.49.186:3000';
   //readonly ROOT_URL = 'http://localhost:3000';
   places: Observable<any>;
   constructor(private http : HttpClient){}
